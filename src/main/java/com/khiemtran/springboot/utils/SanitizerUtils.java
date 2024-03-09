@@ -19,6 +19,34 @@ public class SanitizerUtils {
         .htmlEscape(untrustedString))).orElse(null);
   }
 
+  public static int sanitizeInt(int untrustedInteger) {
+    String sanitizedString = HtmlUtils.htmlEscape(String.valueOf(untrustedInteger));
+    int sanitizedInt;
+    try {
+      sanitizedInt = Integer.parseInt(sanitizedString);
+    } catch (NumberFormatException e) {
+      // Handle if the sanitized string cannot be parsed to an integer
+      // For example, log the error or provide a default value
+      sanitizedInt = 0; // Default value
+    }
+    return sanitizedInt;
+  }
+
+  public static long sanitizeLong(long untrustedLong) {
+    String sanitizedString = HtmlUtils.htmlEscape(String.valueOf(untrustedLong));
+    long sanitizedLong;
+    try {
+      sanitizedLong = Long.parseLong(sanitizedString);
+    } catch (NumberFormatException e) {
+      // Handle if the sanitized string cannot be parsed to an integer
+      // For example, log the error or provide a default value
+      sanitizedLong = 0; // Default value
+    }
+    return sanitizedLong;
+  }
+
+
+
   public static String sanitizeHTML(String untrustedHTML) {
     PolicyFactory policyFactory = new HtmlPolicyBuilder()
         .allowAttributes("href").onElements("a")
