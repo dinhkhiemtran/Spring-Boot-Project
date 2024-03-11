@@ -1,5 +1,6 @@
 package com.khiemtran.springboot.payload.request;
 
+import com.khiemtran.springboot.payload.response.UserResponse;
 import com.khiemtran.springboot.security.Sanitizer;
 import com.khiemtran.springboot.utils.SanitizerUtils;
 import jakarta.validation.constraints.Email;
@@ -22,5 +23,9 @@ public record UserRequest(
         SanitizerUtils.sanitizeInt(age),
         SanitizerUtils.sanitizeString(city),
         SanitizerUtils.sanitizeString(email));
+  }
+
+  public UserResponse toResponse() {
+    return new UserResponse(firstName, lastName, age, email);
   }
 }
