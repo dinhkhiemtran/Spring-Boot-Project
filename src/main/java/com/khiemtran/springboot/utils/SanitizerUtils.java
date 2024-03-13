@@ -45,8 +45,6 @@ public class SanitizerUtils {
     return sanitizedLong;
   }
 
-
-
   public static String sanitizeHTML(String untrustedHTML) {
     PolicyFactory policyFactory = new HtmlPolicyBuilder()
         .allowAttributes("href").onElements("a")
