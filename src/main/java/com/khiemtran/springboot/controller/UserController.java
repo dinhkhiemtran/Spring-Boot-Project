@@ -1,14 +1,14 @@
 package com.khiemtran.springboot.controller;
 
 import com.khiemtran.springboot.payload.request.UserRequest;
+import com.khiemtran.springboot.payload.response.UserResponse;
 import com.khiemtran.springboot.service.UserService;
 import jakarta.validation.Valid;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -24,5 +24,23 @@ public class UserController {
     UserRequest sanitizer = userRequest.sanitize(userRequest);
     userService.save(sanitizer);
     return ResponseEntity.ok().build();
+  }
+
+  @GetMapping("/users")
+  public ResponseEntity<List<UserResponse>> getAllUsers() throws BadRequestException {
+    List<UserResponse> users = userService.getAllUser();
+    return ResponseEntity.ok(users);
+  }
+
+  @GetMapping("/users/count")
+  public ResponseEntity<String> countUsers() {
+    String response = String.format("Total Users: %s", userService.count());
+    return ResponseEntity.ok(response);
+  }
+
+  @GetMapping("users/name")
+  public ResponseEntity<?> getAllNamesUsers() throws BadRequestException {
+    List<String> names = userService.getNames();
+    return ResponseEntity.ok(names);
   }
 }

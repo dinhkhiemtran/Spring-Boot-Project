@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 
 public record UserRequest(
-    String name,
+    @NotNull(message = "Name is not null") String name,
     @NotNull(message = "Username is not null") String username,
     @NotNull(message = "Email is not null") @Email String email,
     @NotNull(message = "Password is not null") String password
